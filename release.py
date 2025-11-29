@@ -46,9 +46,12 @@ def update_version(new_version):
     pyproject_path = Path("pyproject.toml")
     content = pyproject_path.read_text()
 
-    # Update version
+    # Update version - only the main project version in [project] section
     updated_content = re.sub(
-        r'version = "[^"]+"', f'version = "{new_version}"', content
+        r'(\[project\].*?)^version = "[^"]+"',
+        rf'\1version = "{new_version}"',
+        content,
+        flags=re.MULTILINE | re.DOTALL
     )
 
     if content == updated_content:
