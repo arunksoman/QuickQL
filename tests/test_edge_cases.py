@@ -44,7 +44,7 @@ class TestEdgeCases:
         """Test handling of multiline SQL strings."""
         multiline_condition = """
         user_id IN (
-            SELECT id FROM active_users 
+            SELECT id FROM active_users
             WHERE last_login > '2023-01-01'
         )
         """
@@ -110,7 +110,7 @@ class TestErrorHandling:
             QueryElement.create((1, 2, 3, 4))  # Too many elements
 
         with pytest.raises(ValueError, match="Invalid argument format"):
-            QueryElement.create(tuple())  # Empty tuple
+            QueryElement.create(())  # Empty tuple
 
     def test_unsupported_sql_clause(self):
         """Test adding unsupported SQL clauses."""
@@ -156,10 +156,10 @@ class TestErrorHandling:
         query = Query()
 
         # These should handle None gracefully or raise appropriate errors
-        with pytest.raises(Exception):  # Should raise some form of error
+        with pytest.raises((TypeError, ValueError, AttributeError)):
             query.SELECT(None)
 
-        with pytest.raises(Exception):
+        with pytest.raises((TypeError, ValueError, AttributeError)):
             query.FROM(None)
 
     def test_empty_string_handling(self):
@@ -208,7 +208,7 @@ class TestMemoryAndPerformance:
 
     def test_deep_copy_behavior(self):
         """Test that queries don't interfere with each other."""
-        base_query = Query().SELECT("*").FROM("users")
+        # base_query = Query().SELECT("*").FROM("users")
 
         # Create two "branches" from the base
         query1 = Query().SELECT("*").FROM("users").WHERE("active = 1")

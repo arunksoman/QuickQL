@@ -116,7 +116,8 @@ def main():
     print("=" * 60)
     print("\nNext steps:")
     print(
-        "1. Activate the environment: source .venv/bin/activate (Linux/macOS) or .venv\\Scripts\\activate (Windows)"
+        "1. Activate the environment: source .venv/bin/activate (Linux/macOS) or "
+        + ".venv\\Scripts\\activate (Windows)"
     )
     print("2. Or use 'uv run' prefix for commands")
     print("\nCommon commands:")

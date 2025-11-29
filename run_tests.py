@@ -5,7 +5,6 @@ Test runner script for QuickQL.
 This script provides easy commands to run tests with different configurations.
 """
 
-from pathlib import Path
 import subprocess
 import sys
 
@@ -37,9 +36,6 @@ def main():
         return
 
     command = sys.argv[1].lower()
-
-    # Ensure we're in the project root
-    project_root = Path(__file__).parent
 
     if command == "help":
         main()

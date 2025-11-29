@@ -348,11 +348,11 @@ class TestComplexQueries:
     def test_query_with_subquery_in_with(self):
         """Test complex query with subquery in WITH clause."""
         subquery = """
-        SELECT 
+        SELECT
             user_id,
             COUNT(*) as comment_count,
             MAX(created_at) as last_comment
-        FROM comments 
+        FROM comments
         WHERE created_at > '2023-01-01'
         GROUP BY user_id
         """

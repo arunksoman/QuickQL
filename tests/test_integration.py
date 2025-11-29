@@ -90,11 +90,11 @@ class TestIntegration:
 
         # Monthly sales summary with year-over-year comparison
         monthly_sales_cte = """
-        SELECT 
+        SELECT
             DATE_FORMAT(created_at, '%Y-%m') as month,
             SUM(total_amount) as monthly_total,
             COUNT(*) as order_count
-        FROM orders 
+        FROM orders
         WHERE status = 'completed'
         GROUP BY DATE_FORMAT(created_at, '%Y-%m')
         """
@@ -124,13 +124,13 @@ class TestIntegration:
 
         # User engagement metrics
         user_activity_cte = """
-        SELECT 
+        SELECT
             user_id,
             COUNT(*) as login_count,
             MAX(created_at) as last_login,
             MIN(created_at) as first_login,
             DATEDIFF(MAX(created_at), MIN(created_at)) as days_active
-        FROM user_sessions 
+        FROM user_sessions
         WHERE created_at >= DATE_SUB(NOW(), INTERVAL 30 DAY)
         GROUP BY user_id
         """
@@ -145,7 +145,8 @@ class TestIntegration:
                 "ua.last_login",
                 "ua.days_active",
                 "CASE WHEN ua.login_count >= 20 THEN 'High' "
-                + "WHEN ua.login_count >= 5 THEN 'Medium' ELSE 'Low' END as engagement_level",
+                + "WHEN ua.login_count >= 5 THEN 'Medium' ELSE 'Low' "
+                + "END as engagement_level",
             )
             .FROM("users u")
             .add("INNER JOIN", "user_activity ua ON u.id = ua.user_id")
@@ -213,7 +214,7 @@ class TestIntegration:
 
         # Should contain all the expected parts
         expected_parts = [
-            "customers.name, customers.email, COUNT(orders.id) as order_count, SUM(orders.total) as lifetime_value",
+            "customers.name, customers.email, COUNT(orders.id) as order_count, SUM(orders.total) as lifetime_value", #noqa
             "FROM\n    customers",
             "LEFT JOIN",
             "customers.active = 1 AND customers.created_at >= '2023-01-01'",
@@ -230,7 +231,7 @@ class TestIntegration:
         """Test a real-world performance monitoring query."""
 
         slow_queries_cte = """
-        SELECT 
+        SELECT
             query_hash,
             COUNT(*) as execution_count,
             AVG(execution_time_ms) as avg_time,
