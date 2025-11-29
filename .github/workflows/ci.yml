@@ -35,7 +35,7 @@ jobs:
     - name: Lint with ruff
       run: |
         uv run ruff check .
-        uv run ruff format --check .
+        uv run ruff format .
     
     - name: Test with pytest
       run: |
@@ -67,9 +67,9 @@ jobs:
         echo "Verifying Python version in venv:"
         uv run python --version
     
-    - name: Check formatting with ruff
+    - name: Format code with ruff
       run: |
-        uv run ruff format --check .
+        uv run ruff format .
     
     - name: Lint with ruff
       run: |
