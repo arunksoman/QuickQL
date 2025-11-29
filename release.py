@@ -130,7 +130,7 @@ def create_release(version, dry_run=False):
         return False
 
     # Create tag
-    tag_name = f"v{version}"
+    tag_name = f"{version}"
     result = run_command(
         ["git", "tag", "-a", tag_name, "-m", f"Release {version}"],
         f"Creating tag {tag_name}",
